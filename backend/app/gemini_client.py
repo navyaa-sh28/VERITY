@@ -38,3 +38,14 @@ def generate_json(prompt: str) -> dict:
                     continue
                 break  # other errors: try the next model
     raise RuntimeError(f"All Gemini models failed: {last_error}")
+
+def embed_many(texts: list[str]) -> list[list[float]]:
+    out = []
+    for i in range(0, len(texts), 50):
+        res = client.models.embed_content(
+            model=EMBED_MODEL,
+            contents=texts[i:i + 50],
+            config=types.EmbedContentConfig(output_dimensionality=768),
+        )
+        out.extend([list(e.values) for e in res.embeddings])
+    return out
