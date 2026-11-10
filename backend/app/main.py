@@ -2,7 +2,7 @@
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import CORS_ORIGINS
 from app.auth import get_current_user
-from app.routers import guidelines, submissions, evidence
+from app.routers import guidelines, submissions, evidence, analysis
 
 app = FastAPI(title="VERITY API")
 
@@ -18,6 +18,7 @@ app.add_middleware(
 app.include_router(guidelines.router)
 app.include_router(submissions.router)
 app.include_router(evidence.router)
+app.include_router(analysis.router)
 
 
 @app.get("/health")
@@ -28,3 +29,4 @@ def health():
 @app.get("/me")
 def me(user=Depends(get_current_user)):
     return user
+
