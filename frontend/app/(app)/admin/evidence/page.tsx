@@ -43,7 +43,7 @@ export default function EvidencePage() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [validUntil, setValidUntil] = useState("");
-  const [trusted, setTrusted] = useState(false);
+  const [trusted, setTrusted] = useState(true);
   const [file, setFile] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -87,7 +87,7 @@ export default function EvidencePage() {
     const fd = new FormData();
     fd.append("title", title.trim());
     fd.append("text", text.trim());
-    fd.append("trusted", trusted ? "true" : "false");
+    fd.append("trusted", "true");
 
     // Only append valid_until if the field has a value
     if (validUntil.trim()) {
