@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Montserrat:wght@500;600;700&amp;family=Open+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"error-container": "#ffdad6", "on-secondary-fixed-variant": "#00504b", "surface-container-lowest": "#ffffff", "on-primary-fixed": "#071e29", "on-secondary-container": "#006f68", "on-surface-variant": "#43474b", "inverse-primary": "#b4cad8", "on-tertiary-fixed-variant": "#5f4100", secondary: "#006a64", primary: "#001520", "surface-variant": "#e2e3e1", surface: "#f9f9f7", "on-background": "#1a1c1b", "on-secondary": "#ffffff", "primary-fixed-dim": "#b4cad8", "on-primary-container": "#7c929f", "on-primary": "#ffffff", "secondary-container": "#91f0e6", "surface-container": "#eeeeec", tertiary: "#1c1100", outline: "#73787b", "inverse-surface": "#2f3130", "secondary-fixed-dim": "#77d6cd", "on-tertiary-container": "#b1883e", "surface-container-high": "#e8e8e6", "surface-container-low": "#f4f4f2", "on-primary-fixed-variant": "#354955", "on-error-container": "#93000a", "inverse-on-surface": "#f1f1ef", "surface-tint": "#4d616e", "on-tertiary-fixed": "#271900", "surface-container-highest": "#e2e3e1", error: "#ba1a1a", "surface-dim": "#dadad8", "surface-bright": "#f9f9f7", "tertiary-fixed": "#ffdea9", "outline-variant": "#c3c7cb", "on-surface": "#1a1c1b", "on-tertiary": "#ffffff", "primary-fixed": "#d0e6f4", "tertiary-container": "#372400", background: "#f9f9f7", "on-error": "#ffffff", "on-secondary-fixed": "#00201e", "primary-container": "#152a35", "tertiary-fixed-dim": "#eebf6f", "secondary-fixed": "#94f3e9"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"space-md": "1rem", "space-sm": "0.5rem", margin: "2rem", "space-xs": "0.25rem", "gutter-sm": "1rem", "gutter-lg": "2rem", "margin-lg": "3rem", "space-xl": "2.5rem", gutter: "1.5rem", "space-lg": "1.5rem", "margin-sm": "1rem"}, fontFamily: {"title-md": ["Montserrat"], "headline-lg": ["Montserrat"], "label-sm": ["Open Sans"], "label-lg": ["Open Sans"], "headline-md": ["Montserrat"], "headline-xl": ["Montserrat"], "label-md": ["Open Sans"], "headline-xl-mobile": ["Montserrat"], "body-sm": ["Open Sans"], "body-md": ["Open Sans"], "title-lg": ["Montserrat"], "code-sm": ["JetBrains Mono"], "body-lg": ["Open Sans"], "headline-lg-mobile": ["Montserrat"], "headline-sm": ["Montserrat"], headline: ["Montserrat"], display: ["Montserrat"], body: ["Open Sans"], label: ["Open Sans"]}, fontSize: {"title-md": ["16px", {lineHeight: "22px", fontWeight: "600"}], "headline-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.015em", fontWeight: "600"}], "label-sm": ["11px", {lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "600"}], "label-lg": ["14px", {lineHeight: "20px", fontWeight: "600"}], "headline-md": ["24px", {lineHeight: "32px", fontWeight: "600"}], "headline-xl": ["40px", {lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700"}], "label-md": ["12px", {lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600"}], "headline-xl-mobile": ["28px", {lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "700"}], "body-sm": ["12px", {lineHeight: "18px", fontWeight: "400"}], "body-md": ["14px", {lineHeight: "22px", fontWeight: "400"}], "title-lg": ["18px", {lineHeight: "24px", fontWeight: "600"}], "code-sm": ["12px", {lineHeight: "16px", fontWeight: "400"}], "body-lg": ["16px", {lineHeight: "26px", fontWeight: "400"}], "headline-lg-mobile": ["24px", {lineHeight: "32px", fontWeight: "600"}], "headline-sm": ["20px", {lineHeight: "28px", fontWeight: "600"}]}}}};</script><style>@layer base { html, body { margin: 0; padding: 0; min-height: 100%; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-background font-body-md text-body-md text-on-surface antialiased flex flex-col min-h-full"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter-sm flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="VERITY Logo" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/ALJJyrBkWfl2vOiYnGcI14aF1DRrrN2xhNSsuOW3kw2WHR8ew8bGv4YMBBhoRd-bPY6gM2dy-XscHtgcdSobiQQmo0-n6zgwqjif_Cnpup5yWIVUMl1bYFZI7SvnRYxv_pitGLnJVwVUuapPE8HJhPxjECWGgiVLOKo6G2riRIFiaP2sd17TvKvnk0TgKP3JyQEJ8iGljuuWiQotYRJxl2WTiaiCiMODb4iiTjprekLwRqeBTw"/><div class="flex flex-col min-w-0"><div class="flex items-center gap-space-xs"><span class="font-title-md text-title-md text-primary tracking-tight truncate">VERITY</span><span class="inline-flex items-center px-space-xs py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-fixed-variant font-label-sm text-label-sm truncate max-w-[110px]">Global Brand Q3</span></div><span class="font-label-sm text-label-sm text-on-surface-variant truncate">Admin</span></div></div><div class="flex items-center gap-space-xs shrink-0"><button aria-label="Notifications" class="relative w-11 h-11 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container active:scale-95 transition-all"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span></button><button aria-label="User Profile" class="w-11 h-11 flex items-center justify-center rounded-full hover:opacity-90 active:scale-95 transition-all"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQIuoEQZ9NNXGS1NLtkhCG0TUYOsBoFQBmDLrZFqyNOxs8ZanhoO42V_M5iCKfaec9jXKqBYqJLqEkejMphKFC3lzAw2wLqUrEysR8ciEtPXjUG2O4bJ32YCSkymMcGomB17Qfo0PlVFsBz8cFxjvhpAb6bCOTFAe9Y3UY9emcvXhwG5DyArQpXmgGJN8dkh7hr6rklqwZe-7nQWQc_nCEo1n1BksUgGYPV2P3p0p7"/></button></div></div></header><main class="flex-1 w-full bg-background pt-16 pb-20 px-gutter-sm flex flex-col"><div class="flex flex-col w-full pb-8">
+<!-- Header Context & Subtitle -->
+<div class="flex flex-col gap-space-xs mb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-primary-container text-on-primary">
+<span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+</span>
+<h1 class="font-headline-sm text-headline-sm text-primary">Admin &amp; Knowledge Vault</h1>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+      Manage corporate brand guidelines and verified substantiation records.
+    </p>
+</div>
+<!-- Interactive Segmented Controls -->
+<div class="w-full bg-surface-container rounded-xl p-1 mb-space-lg flex gap-1 shadow-sm">
+<button class="flex-1 py-2 px-space-sm rounded-lg font-label-md text-label-md flex items-center justify-center gap-1.5 transition-all bg-surface-container-lowest text-primary shadow-sm font-semibold" id="tab-btn-guidelines" onclick="switchAdminTab('guidelines')">
+<span class="material-symbols-outlined text-[18px] text-secondary">policy</span>
+<span>Guidelines &amp; Rules</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</button>
+<button class="flex-1 py-2 px-space-sm rounded-lg font-label-md text-label-md flex items-center justify-center gap-1.5 transition-all text-on-surface-variant hover:text-primary" id="tab-btn-evidence" onclick="switchAdminTab('evidence')">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Evidence Vault</span>
+<span class="px-1.5 py-0.2 rounded-full bg-secondary-container text-on-secondary-fixed-variant text-[10px] font-bold">34</span>
+</button>
+</div>
+<!-- SECTION 1: GUIDELINES & RULES -->
+<section class="flex flex-col gap-space-md transition-opacity duration-200" id="section-guidelines">
+<!-- Header with Action -->
+<div class="flex items-center justify-between gap-space-sm">
+<div>
+<h2 class="font-title-md text-title-md text-primary">Brand Guidelines Versions</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Automated validation policies and enforcement engines</p>
+</div>
+<button class="shrink-0 inline-flex items-center gap-1 px-space-sm py-2 rounded-lg bg-surface-container-lowest text-secondary shadow-sm hover:bg-secondary-container/20 transition-all font-label-sm text-label-sm active:scale-95">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+<span>Deploy Version</span>
+</button>
+</div>
+<!-- Guideline Card 1: Active Version -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col gap-space-sm">
+<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-secondary"></div>
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap mb-1">
+<span class="font-code-sm text-code-sm text-secondary font-medium tracking-tight">VERSION SPEC</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-fixed-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+              ACTIVE
+            </span>
+</div>
+<h3 class="font-title-md text-title-md text-primary leading-snug">v4.3 Global Compliance &amp; ESG Directive</h3>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center bg-surface-container text-on-surface-variant hover:text-primary shrink-0">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">event_available</span>
+<span>Published Oct 14, 2024 • <strong class="text-primary font-medium">148 Rules enforced</strong></span>
+</div>
+<div class="flex items-start gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary mt-0.5">travel_explore</span>
+<span class="line-clamp-2">Scope: All global marketing, PR, and technical collateral</span>
+</div>
+</div>
+<!-- Action Row -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-space-sm">
+<button class="inline-flex items-center gap-1 font-label-sm text-label-sm text-secondary hover:underline font-semibold">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+            View Rules (148)
+          </button>
+<button class="inline-flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[16px]">difference</span>
+            Audit Diff
+          </button>
+</div>
+<span class="font-code-sm text-[11px] text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">sha:e89f41b</span>
+</div>
+</div>
+<!-- Guideline Card 2: Archived Version -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-xs opacity-90">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+              Archived
+            </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Replaced by v4.3</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary">v4.2 Brand Truth Standard</h3>
+</div>
+<button class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary inline-flex items-center gap-0.5">
+<span>Rollback</span>
+<span class="material-symbols-outlined text-[14px]">history</span>
+</button>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm mt-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Jan 2024 – Oct 2024 • 132 Rules enforced</span>
+</div>
+</div>
+<!-- Guideline Card 3: Draft in Review -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm relative overflow-hidden">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">pending_actions</span>
+              Draft in Review
+            </span>
+<span class="font-code-sm text-code-sm text-on-surface-variant">Staging #84</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary">v4.4-RC1 Draft (2025 AI Transparency Spec)</h3>
+</div>
+<div class="w-2.5 h-2.5 rounded-full bg-tertiary-fixed-dim animate-pulse shrink-0 mt-1"></div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Includes EU AI Act compliance checks, autonomous synthetic media watermarking verification, and revised carbon metrics.
+      </p>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center -space-x-2">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary font-label-sm text-[10px] flex items-center justify-center ring-2 ring-surface-container-lowest">JD</div>
+<div class="w-6 h-6 rounded-full bg-secondary text-on-secondary font-label-sm text-[10px] flex items-center justify-center ring-2 ring-surface-container-lowest">SR</div>
+<span class="pl-3 font-body-sm text-[11px] text-on-surface-variant">2 Approvals needed</span>
+</div>
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container font-label-sm text-label-sm text-primary hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-[14px]">rule</span>
+          Review Draft
+        </button>
+</div>
+</div>
+</section>
+<!-- SECTION 2: EVIDENCE VAULT -->
+<section class="flex flex-col gap-space-md" id="section-evidence">
+<!-- Quick Upload Form Card -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-secondary">cloud_upload</span>
+<h2 class="font-title-md text-title-md text-primary">Upload Substantiation Evidence</h2>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface-variant">AES-256</span>
+</div>
+<!-- Drag / Tap Box -->
+<div class="w-full bg-surface-container-low rounded-xl p-space-lg flex flex-col items-center justify-center text-center cursor-pointer transition-colors hover:bg-secondary-container/20 group">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center mb-2 shadow-sm text-secondary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[26px]">upload_file</span>
+</div>
+<p class="font-title-md text-body-md text-primary font-medium">Tap to upload PDF, CSV, or lab certification</p>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Maximum file size: 50MB</span>
+</div>
+<!-- Form Inputs -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant font-medium">Document Title</label>
+<div class="relative">
+<input class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-primary font-body-md text-body-md placeholder:text-on-surface-variant/60 focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-secondary/30 transition-all" placeholder="e.g., ISO 14064 Carbon Footprint Attestation 2024" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant font-medium">Issuing Auditor / Third-Party</label>
+<div class="relative">
+<input class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-primary font-body-md text-body-md placeholder:text-on-surface-variant/60 focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-secondary/30 transition-all" placeholder="e.g., Bureau Veritas, Deloitte, BSI" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant font-medium">Expiry / Re-Certification Date</label>
+<div class="relative flex items-center">
+<input class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-primary font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-secondary/30 transition-all" type="date" value="2025-12-31"/>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<button class="w-full h-11 bg-primary text-on-primary rounded-lg font-label-md text-label-md flex items-center justify-center gap-2 hover:bg-primary-container active:scale-[0.99] transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary-fixed">lock_clock</span>
+<span>Verify &amp; Index Document</span>
+</button>
+</div>
+<!-- Evidence Vault Records Header & Search -->
+<div class="flex items-center justify-between gap-space-sm mt-space-xs">
+<div>
+<h2 class="font-title-md text-title-md text-primary">Substantiation Records</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Active truth-anchors tied to customer-facing claims</p>
+</div>
+<button class="w-9 h-9 rounded-lg bg-surface-container-lowest shadow-sm flex items-center justify-center text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</button>
+</div>
+<!-- Evidence Records Stack -->
+<div class="flex flex-col gap-space-sm">
+<!-- Record 1 -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+              Verified Active
+            </span>
+<span class="font-code-sm text-code-sm text-on-surface-variant">REF: EV-2024-914</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-secondary">verified_user</span>
+</div>
+<h3 class="font-title-md text-body-md text-primary font-semibold mt-1">PwC FY24 Corporate Sustainability &amp; Carbon Audit</h3>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1 text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant/80">Auditor:</span>
+<span class="font-medium text-primary">PricewaterhouseCoopers LLP</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant/80">Expiry:</span>
+<span class="font-medium text-primary">Nov 30, 2025</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="inline-flex items-center gap-1.5 text-secondary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[16px]">link</span>
+<span>14 Claims currently bound</span>
+</div>
+<button class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary flex items-center gap-0.5">
+<span>Cert Hash</span>
+<span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- Record 2 -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+              Verified Active
+            </span>
+<span class="font-code-sm text-code-sm text-on-surface-variant">REF: ISO-27001-A</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-secondary">verified_user</span>
+</div>
+<h3 class="font-title-md text-body-md text-primary font-semibold mt-1">ISO/IEC 27001:2022 Security Attestation</h3>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1 text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant/80">Auditor:</span>
+<span class="font-medium text-primary">BSI Assurance</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant/80">Expiry:</span>
+<span class="font-medium text-primary">Mar 15, 2026</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="inline-flex items-center gap-1.5 text-secondary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[16px]">link</span>
+<span>8 Claims bound</span>
+</div>
+<button class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary flex items-center gap-0.5">
+<span>Cert Hash</span>
+<span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- Record 3 (Expiring) -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-xs relative overflow-hidden">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">hourglass_top</span>
+              Expiring in 18 Days
+            </span>
+<span class="font-code-sm text-code-sm text-on-surface-variant">REF: GART-2023-MQ</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-tertiary-fixed-dim">warning</span>
+</div>
+<h3 class="font-title-md text-body-md text-primary font-semibold mt-1">Gartner Magic Quadrant Leader Report 2023</h3>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1 text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant/80">Auditor:</span>
+<span class="font-medium text-primary">Gartner Research</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant/80">Expiry:</span>
+<span class="font-medium text-error font-semibold">Nov 15, 2024</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="inline-flex items-center gap-1.5 text-on-tertiary-container font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[16px]">link</span>
+<span>6 Claims bound</span>
+</div>
+<button class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-tertiary-fixed/40 text-on-tertiary-fixed-variant font-label-sm text-label-sm font-semibold hover:bg-tertiary-fixed transition-colors">
+<span>Renew File</span>
+<span class="material-symbols-outlined text-[14px]">refresh</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive script for tabs toggle -->
+<script>
+    function switchAdminTab(activeTab) {
+      const guidelinesSec = document.getElementById('section-guidelines');
+      const evidenceSec = document.getElementById('section-evidence');
+      const btnGuidelines = document.getElementById('tab-btn-guidelines');
+      const btnEvidence = document.getElementById('tab-btn-evidence');
+
+      if (activeTab === 'guidelines') {
+        guidelinesSec.classList.remove('hidden');
+        evidenceSec.classList.add('hidden');
+        
+        btnGuidelines.className = "flex-1 py-2 px-space-sm rounded-lg font-label-md text-label-md flex items-center justify-center gap-1.5 transition-all bg-surface-container-lowest text-primary shadow-sm font-semibold";
+        btnEvidence.className = "flex-1 py-2 px-space-sm rounded-lg font-label-md text-label-md flex items-center justify-center gap-1.5 transition-all text-on-surface-variant hover:text-primary";
+      } else {
+        guidelinesSec.classList.add('hidden');
+        evidenceSec.classList.remove('hidden');
+        
+        btnEvidence.className = "flex-1 py-2 px-space-sm rounded-lg font-label-md text-label-md flex items-center justify-center gap-1.5 transition-all bg-surface-container-lowest text-primary shadow-sm font-semibold";
+        btnGuidelines.className = "flex-1 py-2 px-space-sm rounded-lg font-label-md text-label-md flex items-center justify-center gap-1.5 transition-all text-on-surface-variant hover:text-primary";
+      }
+    }
+  </script>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/95 backdrop-blur-xl shadow-[0_-2px_12px_rgba(21,42,53,0.06)]" data-active-classes="text-secondary font-semibold"><div class="h-16 px-space-xs flex items-center justify-around"><a class="flex flex-col items-center justify-center min-w-[52px] h-12 gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[22px]">dashboard</span><span class="font-label-sm text-label-sm">Dash</span></a><a class="flex flex-col items-center justify-center min-w-[52px] h-12 gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="submit" href="#"><span class="material-symbols-outlined text-[22px]">verified_user</span><span class="font-label-sm text-label-sm">Verify</span></a><a class="flex flex-col items-center justify-center min-w-[52px] h-12 gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="verification-result" href="#"><span class="material-symbols-outlined text-[22px]">fact_check</span><span class="font-label-sm text-label-sm">Result</span></a><a class="relative flex flex-col items-center justify-center min-w-[52px] h-12 gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="review-queue" href="#"><span class="material-symbols-outlined text-[22px]">rate_review</span><span class="absolute top-1 right-2 inline-flex items-center justify-center px-1 min-w-[16px] h-4 rounded-full bg-secondary text-on-secondary font-label-sm text-[10px] leading-none">4</span><span class="font-label-sm text-label-sm">Queue</span></a><a class="flex flex-col items-center justify-center min-w-[52px] h-12 gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="audit-log" href="#"><span class="material-symbols-outlined text-[22px]">history_edu</span><span class="font-label-sm text-label-sm">Audit</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[52px] h-12 gap-0.5 transition-colors text-secondary font-semibold" data-path="admin" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-sm text-label-sm">Admin</span></a></div></nav></body></html>

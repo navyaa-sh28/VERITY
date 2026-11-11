@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Montserrat:wght@500;600;700&amp;family=Open+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"error-container": "#ffdad6", "on-secondary-fixed-variant": "#00504b", "surface-container-lowest": "#ffffff", "on-primary-fixed": "#071e29", "on-secondary-container": "#006f68", "on-surface-variant": "#43474b", "inverse-primary": "#b4cad8", "on-tertiary-fixed-variant": "#5f4100", secondary: "#006a64", primary: "#001520", "surface-variant": "#e2e3e1", surface: "#f9f9f7", "on-background": "#1a1c1b", "on-secondary": "#ffffff", "primary-fixed-dim": "#b4cad8", "on-primary-container": "#7c929f", "on-primary": "#ffffff", "secondary-container": "#91f0e6", "surface-container": "#eeeeec", tertiary: "#1c1100", outline: "#73787b", "inverse-surface": "#2f3130", "secondary-fixed-dim": "#77d6cd", "on-tertiary-container": "#b1883e", "surface-container-high": "#e8e8e6", "surface-container-low": "#f4f4f2", "on-primary-fixed-variant": "#354955", "on-error-container": "#93000a", "inverse-on-surface": "#f1f1ef", "surface-tint": "#4d616e", "on-tertiary-fixed": "#271900", "surface-container-highest": "#e2e3e1", error: "#ba1a1a", "surface-dim": "#dadad8", "surface-bright": "#f9f9f7", "tertiary-fixed": "#ffdea9", "outline-variant": "#c3c7cb", "on-surface": "#1a1c1b", "on-tertiary": "#ffffff", "primary-fixed": "#d0e6f4", "tertiary-container": "#372400", background: "#f9f9f7", "on-error": "#ffffff", "on-secondary-fixed": "#00201e", "primary-container": "#152a35", "tertiary-fixed-dim": "#eebf6f", "secondary-fixed": "#94f3e9"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"space-md": "1rem", "space-sm": "0.5rem", margin: "2rem", "space-xs": "0.25rem", "gutter-sm": "1rem", "gutter-lg": "2rem", "margin-lg": "3rem", "space-xl": "2.5rem", gutter: "1.5rem", "space-lg": "1.5rem", "margin-sm": "1rem"}, fontFamily: {"title-md": ["Montserrat"], "headline-lg": ["Montserrat"], "label-sm": ["Open Sans"], "label-lg": ["Open Sans"], "headline-md": ["Montserrat"], "headline-xl": ["Montserrat"], "label-md": ["Open Sans"], "headline-xl-mobile": ["Montserrat"], "body-sm": ["Open Sans"], "body-md": ["Open Sans"], "title-lg": ["Montserrat"], "code-sm": ["JetBrains Mono"], "body-lg": ["Open Sans"], "headline-lg-mobile": ["Montserrat"], "headline-sm": ["Montserrat"], headline: ["Montserrat"], display: ["Montserrat"], body: ["Open Sans"], label: ["Open Sans"]}, fontSize: {"title-md": ["16px", {lineHeight: "22px", fontWeight: "600"}], "headline-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.015em", fontWeight: "600"}], "label-sm": ["11px", {lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "600"}], "label-lg": ["14px", {lineHeight: "20px", fontWeight: "600"}], "headline-md": ["24px", {lineHeight: "32px", fontWeight: "600"}], "headline-xl": ["40px", {lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700"}], "label-md": ["12px", {lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600"}], "headline-xl-mobile": ["28px", {lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "700"}], "body-sm": ["12px", {lineHeight: "18px", fontWeight: "400"}], "body-md": ["14px", {lineHeight: "22px", fontWeight: "400"}], "title-lg": ["18px", {lineHeight: "24px", fontWeight: "600"}], "code-sm": ["12px", {lineHeight: "16px", fontWeight: "400"}], "body-lg": ["16px", {lineHeight: "26px", fontWeight: "400"}], "headline-lg-mobile": ["24px", {lineHeight: "32px", fontWeight: "600"}], "headline-sm": ["20px", {lineHeight: "28px", fontWeight: "600"}]}}}};</script><style>@layer base { html, body { margin: 0; padding: 0; min-height: 100%; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-background font-body-md text-body-md text-on-surface antialiased flex flex-col min-h-full"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter-sm flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="VERITY Logo" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/ALJJyrBkWfl2vOiYnGcI14aF1DRrrN2xhNSsuOW3kw2WHR8ew8bGv4YMBBhoRd-bPY6gM2dy-XscHtgcdSobiQQmo0-n6zgwqjif_Cnpup5yWIVUMl1bYFZI7SvnRYxv_pitGLnJVwVUuapPE8HJhPxjECWGgiVLOKo6G2riRIFiaP2sd17TvKvnk0TgKP3JyQEJ8iGljuuWiQotYRJxl2WTiaiCiMODb4iiTjprekLwRqeBTw"/><div class="flex flex-col min-w-0"><div class="flex items-center gap-space-xs"><span class="font-title-md text-title-md text-primary tracking-tight truncate">VERITY</span><span class="inline-flex items-center px-space-xs py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-fixed-variant font-label-sm text-label-sm truncate max-w-[110px]">Global Brand Q3</span></div><span class="font-label-sm text-label-sm text-on-surface-variant truncate">Submit</span></div></div><div class="flex items-center gap-space-xs shrink-0"><button aria-label="Notifications" class="relative w-11 h-11 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container active:scale-95 transition-all"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span></button><button aria-label="User Profile" class="w-11 h-11 flex items-center justify-center rounded-full hover:opacity-90 active:scale-95 transition-all"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQIuoEQZ9NNXGS1NLtkhCG0TUYOsBoFQBmDLrZFqyNOxs8ZanhoO42V_M5iCKfaec9jXKqBYqJLqEkejMphKFC3lzAw2wLqUrEysR8ciEtPXjUG2O4bJ32YCSkymMcGomB17Qfo0PlVFsBz8cFxjvhpAb6bCOTFAe9Y3UY9emcvXhwG5DyArQpXmgGJN8dkh7hr6rklqwZe-7nQWQc_nCEo1n1BksUgGYPV2P3p0p7"/></button></div></div></header><main class="flex-1 w-full bg-background pt-16 pb-20 px-gutter-sm flex flex-col"><div class="flex flex-col w-full pb-8 space-y-space-md">
+<!-- Introductory Header (No duplicate H1, soft contextual intro) -->
+<div class="flex flex-col space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed-variant font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary mr-1.5 animate-pulse"></span>
+        Audit Engine Live
+      </span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Protocol v4.3-Active</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-primary">New Content Submission</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+      Submit marketing copy, press releases, or campaign materials for instant evidence verification.
+    </p>
+</div>
+<!-- Campaign Metadata Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs text-primary">
+<span class="material-symbols-outlined text-secondary text-[20px]">fact_check</span>
+<span class="font-title-md text-title-md">Campaign Metadata</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-full">Step 1 of 2</span>
+</div>
+<!-- Submission Title Input -->
+<div class="space-y-1">
+<label class="block font-label-md text-label-md text-on-surface" for="submission-title">Submission Title</label>
+<div class="relative">
+<input class="w-full h-10 px-3 bg-surface-container-lowest rounded-lg font-body-md text-body-md text-on-surface shadow-[0_1px_2px_rgba(0,0,0,0.03)] outline-none focus:bg-surface-container-low transition-colors" id="submission-title" placeholder="e.g. Q3 CloudSuite Launch Campaign" type="text" value="Q3 CloudSuite Launch Campaign - Hero Copy"/>
+</div>
+</div>
+<!-- Channel / Asset Type Chips -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface">Channel / Asset Type</label>
+<div class="flex flex-wrap gap-2" id="channel-chip-group">
+<button class="channel-chip px-3 py-1.5 rounded-full font-label-sm text-label-sm bg-secondary-container/40 text-on-secondary-fixed-variant shadow-sm transition-all" data-selected="true" type="button">
+<span class="inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">check</span>
+            Landing Page
+          </span>
+</button>
+<button class="channel-chip px-3 py-1.5 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant hover:text-on-surface transition-all" data-selected="false" type="button">
+          Press Release
+        </button>
+<button class="channel-chip px-3 py-1.5 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant hover:text-on-surface transition-all" data-selected="false" type="button">
+          Social Ad
+        </button>
+<button class="channel-chip px-3 py-1.5 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant hover:text-on-surface transition-all" data-selected="false" type="button">
+          Executive Speech
+        </button>
+</div>
+</div>
+<!-- Target Market Selector -->
+<div class="space-y-1">
+<label class="block font-label-md text-label-md text-on-surface" for="target-market">Target Market &amp; Regulatory Jurisdiction</label>
+<div class="relative">
+<select class="w-full h-10 pl-3 pr-9 appearance-none bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface shadow-[0_1px_2px_rgba(0,0,0,0.03)] outline-none focus:bg-surface-container-low transition-colors cursor-pointer" id="target-market">
+<option selected="">North America &amp; EMEA (FTC &amp; EU ESG compliant)</option>
+<option>North America Domestic Only (FTC Section 5 Standards)</option>
+<option>EMEA Union-Wide (EU Green Claims Directive &amp; CSRD)</option>
+<option>APAC &amp; ASEAN Commercial Regimes (Cross-border Safe Harbor)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-on-surface-variant pointer-events-none text-[20px]">
+          expand_more
+        </span>
+</div>
+</div>
+</div>
+<!-- Content Input Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs text-primary">
+<span class="material-symbols-outlined text-secondary text-[20px]">edit_note</span>
+<span class="font-title-md text-title-md">Marketing Copy &amp; Claim Text</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-container/30 text-on-secondary-fixed-variant">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+<span class="font-label-sm text-label-sm font-semibold tracking-wide">Live Parser</span>
+</div>
+</div>
+<!-- Helper Tooltip Banner in mint (recessed read-only well) -->
+<div class="bg-secondary-container/20 rounded-lg p-space-sm flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">
+        verified
+      </span>
+<p class="font-body-sm text-body-sm text-on-secondary-fixed-variant">
+        Claims regarding performance metrics, sustainability, pricing guarantees, and competitive superiority are automatically matched against the verified Evidence Vault.
+      </p>
+</div>
+<!-- Large Textarea with Sample Copy -->
+<div class="relative mt-2">
+<textarea class="w-full p-3.5 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/60 outline-none resize-none focus:bg-surface transition-colors shadow-inner" id="copy-textarea" placeholder="Paste campaign copy, headline drafts, or body narrative here..." rows="6">CloudSuite 2.0 cuts enterprise infrastructure carbon emissions by 48% across all deployments. Trusted by over 10,000 global enterprises, we guarantee 99.999% uninterrupted uptime with zero configuration overhead, outperforming legacy competitor Apex Cloud by 3.5x in throughput benchmarks.</textarea>
+<!-- Interactive claim detector pulse -->
+<div class="absolute bottom-2.5 right-2.5 flex items-center gap-1 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-0.5 rounded-full shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>
+<span class="font-code-sm text-code-sm text-secondary font-medium">NLP sync</span>
+</div>
+</div>
+<!-- Word Count & Real-Time Claim Counter Bar -->
+<div class="flex items-center justify-between pt-1 text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">analytics</span>
+<span class="font-semibold text-primary" id="claim-telemetry">342 words</span>
+<span>•</span>
+<span class="text-secondary font-semibold">4 claims detected in real-time</span>
+</div>
+<button class="hover:text-primary active:scale-95 transition-transform flex items-center gap-0.5" id="clear-text-btn" type="button">
+<span class="material-symbols-outlined text-[14px]">refresh</span>
+<span>Reset</span>
+</button>
+</div>
+<!-- Detected Assertions Pill Rack (Tactile delight) -->
+<div class="space-y-1.5 pt-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Identified Assertions for Verification</span>
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between bg-surface-container-low px-2.5 py-1.5 rounded-lg">
+<div class="flex items-center gap-2 min-w-0">
+<span class="w-2 h-2 rounded-full bg-secondary shrink-0"></span>
+<span class="font-body-sm text-body-sm text-on-surface truncate">"-48% enterprise carbon emissions"</span>
+</div>
+<span class="font-label-sm text-label-sm bg-secondary-container/40 text-on-secondary-fixed-variant px-2 py-0.5 rounded-full shrink-0">
+            ESG Metric
+          </span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-low px-2.5 py-1.5 rounded-lg">
+<div class="flex items-center gap-2 min-w-0">
+<span class="w-2 h-2 rounded-full bg-secondary shrink-0"></span>
+<span class="font-body-sm text-body-sm text-on-surface truncate">"Trusted by 10,000+ enterprises"</span>
+</div>
+<span class="font-label-sm text-label-sm bg-secondary-container/40 text-on-secondary-fixed-variant px-2 py-0.5 rounded-full shrink-0">
+            Adoption
+          </span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-low px-2.5 py-1.5 rounded-lg">
+<div class="flex items-center gap-2 min-w-0">
+<span class="w-2 h-2 rounded-full bg-secondary shrink-0"></span>
+<span class="font-body-sm text-body-sm text-on-surface truncate">"3.5x throughput vs Apex Cloud"</span>
+</div>
+<span class="font-label-sm text-label-sm bg-secondary-container/40 text-on-secondary-fixed-variant px-2 py-0.5 rounded-full shrink-0">
+            Comparative
+          </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Verification Settings Toggle Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs text-primary">
+<span class="material-symbols-outlined text-secondary text-[20px]">tune</span>
+<span class="font-title-md text-title-md">Verification Settings</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Strict Mode</span>
+</div>
+<!-- Toggle 1: Strict Factual Verification -->
+<div class="flex items-center justify-between py-1">
+<div class="flex flex-col pr-3">
+<span class="font-label-lg text-label-lg text-on-surface">Strict Factual Verification</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Cross-check metrics against SEC, ESG &amp; lab filings</span>
+</div>
+<button aria-checked="true" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full bg-secondary p-0.5 transition-colors duration-200 ease-in-out focus:outline-none" id="toggle-strict" role="switch" type="button">
+<span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-on-secondary shadow transition duration-200 ease-in-out translate-x-5"></span>
+</button>
+</div>
+<!-- Divider subtle tonal -->
+<div class="h-px w-full bg-surface-container"></div>
+<!-- Toggle 2: Include Draft Guidelines v4.3 -->
+<div class="flex items-center justify-between py-1">
+<div class="flex flex-col pr-3">
+<span class="font-label-lg text-label-lg text-on-surface">Include Draft Guidelines v4.3</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Apply pending 2025 cross-market compliance rules</span>
+</div>
+<button aria-checked="true" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full bg-secondary p-0.5 transition-colors duration-200 ease-in-out focus:outline-none" id="toggle-draft" role="switch" type="button">
+<span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-on-secondary shadow transition duration-200 ease-in-out translate-x-5"></span>
+</button>
+</div>
+</div>
+<!-- Evidence Vault Reference Indicator -->
+<div class="flex items-center justify-between px-space-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">database</span>
+<span>Connected to <strong>Vault-Omega</strong> (14,920 records indexed)</span>
+</div>
+<span class="font-code-sm text-code-sm text-on-surface-variant/70">SYNCED</span>
+</div>
+<!-- Primary & Secondary Action Bar -->
+<div class="flex flex-col gap-2 pt-2">
+<!-- Primary Verification CTA (Secondary Teal #218C84 per design guidelines) -->
+<button class="w-full h-12 bg-secondary text-on-secondary rounded-lg font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 shadow-md hover:opacity-95 active:scale-[0.99] transition-all" id="submit-verify-btn" type="button">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<span>Submit &amp; Run Verification</span>
+</button>
+<!-- Secondary Draft Save -->
+<button class="w-full h-10 bg-transparent text-primary-container rounded-lg font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 hover:bg-surface-container active:scale-[0.99] transition-all" id="save-draft-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+<span>Save Draft</span>
+</button>
+</div>
+<!-- Floating Toast Confirmation (Micro-interaction) -->
+<div class="fixed bottom-20 left-4 right-4 z-50 bg-primary-container text-on-primary px-4 py-3 rounded-xl shadow-xl flex items-center justify-between opacity-0 pointer-events-none transition-all duration-300 transform translate-y-3" id="toast-message">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container text-[20px]">task_alt</span>
+<span class="font-body-sm text-body-sm" id="toast-text">Draft saved to Vault securely.</span>
+</div>
+<button class="text-on-primary/60 hover:text-on-primary" onclick="hideToast()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<script>
+  // Channel selector chip toggles
+  document.querySelectorAll('.channel-chip').forEach(button => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll('.channel-chip').forEach(b => {
+        b.dataset.selected = "false";
+        b.className = "channel-chip px-3 py-1.5 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant hover:text-on-surface transition-all";
+        b.innerHTML = b.textContent.trim();
+      });
+      button.dataset.selected = "true";
+      button.className = "channel-chip px-3 py-1.5 rounded-full font-label-sm text-label-sm bg-secondary-container/40 text-on-secondary-fixed-variant shadow-sm transition-all";
+      const currentText = button.textContent.trim();
+      button.innerHTML = `
+        <span class="inline-flex items-center gap-1">
+          <span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">check</span>
+          ${currentText}
+        </span>
+      `;
+    });
+  });
+
+  // Switch toggles interaction
+  function setupToggle(toggleId) {
+    const toggle = document.getElementById(toggleId);
+    if (!toggle) return;
+    toggle.addEventListener('click', () => {
+      const isChecked = toggle.getAttribute('aria-checked') === 'true';
+      const newState = !isChecked;
+      toggle.setAttribute('aria-checked', newState);
+      const knob = toggle.querySelector('span');
+      if (newState) {
+        toggle.classList.remove('bg-surface-container-high');
+        toggle.classList.add('bg-secondary');
+        knob.classList.remove('translate-x-0');
+        knob.classList.add('translate-x-5');
+      } else {
+        toggle.classList.remove('bg-secondary');
+        toggle.classList.add('bg-surface-container-high');
+        knob.classList.remove('translate-x-5');
+        knob.classList.add('translate-x-0');
+      }
+    });
+  }
+  setupToggle('toggle-strict');
+  setupToggle('toggle-draft');
+
+  // Word counter & claim count simulation
+  const textarea = document.getElementById('copy-textarea');
+  const telemetry = document.getElementById('claim-telemetry');
+  const clearBtn = document.getElementById('clear-text-btn');
+
+  function updateTelemetry() {
+    if (!textarea || !telemetry) return;
+    const text = textarea.value.trim();
+    const words = text ? text.split(/\s+/).length : 0;
+    const detectedClaims = Math.max(1, Math.floor(words / 12));
+    telemetry.textContent = `${words} words`;
+    const sibling = telemetry.nextElementSibling ? telemetry.nextElementSibling.nextElementSibling : null;
+    if (sibling) {
+      sibling.textContent = `${detectedClaims} claims detected in real-time`;
+    }
+  }
+
+  if (textarea) {
+    textarea.addEventListener('input', updateTelemetry);
+  }
+
+  if (clearBtn && textarea) {
+    clearBtn.addEventListener('click', () => {
+      textarea.value = "CloudSuite 2.0 cuts enterprise infrastructure carbon emissions by 48% across all deployments. Trusted by over 10,000 global enterprises, we guarantee 99.999% uninterrupted uptime with zero configuration overhead, outperforming legacy competitor Apex Cloud by 3.5x in throughput benchmarks.";
+      updateTelemetry();
+      showToast("Restored benchmark campaign copy.");
+    });
+  }
+
+  // Toast micro-interaction
+  let toastTimer;
+  function showToast(message) {
+    const toast = document.getElementById('toast-message');
+    const toastText = document.getElementById('toast-text');
+    if (!toast) return;
+    if (toastText) toastText.textContent = message;
+    clearTimeout(toastTimer);
+    toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+    toast.classList.add('opacity-100', 'translate-y-0');
+    toastTimer = setTimeout(hideToast, 3500);
+  }
+
+  function hideToast() {
+    const toast = document.getElementById('toast-message');
+    if (!toast) return;
+    toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+    toast.classList.remove('opacity-100', 'translate-y-0');
+  }
+
+  // Primary buttons hooks
+  const saveDraftBtn = document.getElementById('save-draft-btn');
+  if (saveDraftBtn) {
+    saveDraftBtn.addEventListener('click', () => {
+      showToast("Draft saved successfully to active queue.");
+    });
+  }
+
+  const submitVerifyBtn = document.getElementById('submit-verify-btn');
+  if (submitVerifyBtn) {
+    submitVerifyBtn.addEventListener('click', () => {
+      submitVerifyBtn.innerHTML = `
+        <span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>
+        <span>Ingesting &amp; Cross-Verifying...</span>
+      `;
+      submitVerifyBtn.classList.add('opacity-90');
+      setTimeout(() => {
+        showToast("Verification job initiated. Navigating to results...");
+        const resultTab = document.querySelector('a[data-path="verification-result"]');
+        if (resultTab) {
+          resultTab.click();
+        } else {
+          submitVerifyBtn.innerHTML = `
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+            <span>Submit &amp; Run Verification</span>
+          `;
+          submitVerifyBtn.classList.remove('opacity-90');
+        }
+      }, 1200);
+    });
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/95 backdrop-blur-xl shadow-[0_-2px_12px_rgba(21,42,53,0.06)]" data-active-classes="text-secondary font-semibold"><div class="h-16 px-space-xs flex items-center justify-around"><a class="flex flex-col items-center justify-center min-w-[52px] h-12 gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[22px]">dashboard</span><span class="font-label-sm text-label-sm">Dash</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[52px] h-12 gap-0.5 transition-colors text-secondary font-semibold" data-path="submit" href="#"><span class="material-symbols-outlined text-[22px]">verified_user</span><span class="font-label-sm text-label-sm">Verify</span></a><a class="flex flex-col items-center justify-center min-w-[52px] h-12 gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="verification-result" href="#"><span class="material-symbols-outlined text-[22px]">fact_check</span><span class="font-label-sm text-label-sm">Result</span></a><a class="relative flex flex-col items-center justify-center min-w-[52px] h-12 gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="review-queue" href="#"><span class="material-symbols-outlined text-[22px]">rate_review</span><span class="absolute top-1 right-2 inline-flex items-center justify-center px-1 min-w-[16px] h-4 rounded-full bg-secondary text-on-secondary font-label-sm text-[10px] leading-none">4</span><span class="font-label-sm text-label-sm">Queue</span></a><a class="flex flex-col items-center justify-center min-w-[52px] h-12 gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="audit-log" href="#"><span class="material-symbols-outlined text-[22px]">history_edu</span><span class="font-label-sm text-label-sm">Audit</span></a><a class="flex flex-col items-center justify-center min-w-[52px] h-12 gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="admin" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-sm text-label-sm">Admin</span></a></div></nav></body></html>
