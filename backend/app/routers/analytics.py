@@ -49,6 +49,8 @@ def throughput(user=Depends(STAFF)):
 
 def _label(f):
     rt, st = f.get("rule_type"), f["status"]
+    if rt and rt.startswith("visual_"):
+        return "Visual brand issues"
     if rt == "superlative":
         return "Unsupported superlatives"
     if rt == "guarantee":

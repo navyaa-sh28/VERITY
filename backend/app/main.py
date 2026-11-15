@@ -39,3 +39,8 @@ def me(user=Depends(get_current_user)):
 
 from app.routers import documents
 app.include_router(documents.router)
+
+
+from app.routers import visual, branddna
+app.include_router(visual.router)
+app.include_router(branddna.router)

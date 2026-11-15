@@ -20,6 +20,8 @@ def _context(sid):
 def rewrite_submission(sid, only_finding_id=None):
     from app.routers.analysis import build_findings
     sub, tone, rules, approved = _context(sid)
+    if sub.get("kind") == "visual":
+        return []
     findings = [f for f in build_findings(sid) if f["status"] != "supported"]
     if only_finding_id:
         findings = [f for f in findings if f["finding_id"] == only_finding_id]

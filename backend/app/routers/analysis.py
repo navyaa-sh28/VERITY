@@ -3,6 +3,7 @@ from app.auth import get_current_user
 from app.audit import audit
 from app.db import supabase
 from app.engine import analyze_submission
+from app.visualguard import reanalyze as visual_reanalyze
 
 router = APIRouter(prefix="/submissions", tags=["analysis"])
 
@@ -52,7 +53,7 @@ def build_findings(sid: str) -> list:
 @router.post("/{sid}/analyze")
 def analyze(sid: str, user=Depends(get_current_user)):
     sub = _load(sid, user)
-    findings = analyze_submission(sub)
+    findings = visual_reanalyze(sub) if sub.get("kind") == "visual" else analyze_submission(sub)
     audit(user["id"], "submission.analyzed", "submission", sid,
           {"claims": len(findings), "statuses": [f["status"] for f in findings]})
     return build_findings(sid)
