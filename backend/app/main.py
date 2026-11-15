@@ -35,3 +35,7 @@ def me(user=Depends(get_current_user)):
 
 
 
+
+
+from app.routers import documents
+app.include_router(documents.router)

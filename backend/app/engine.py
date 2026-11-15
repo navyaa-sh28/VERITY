@@ -143,7 +143,7 @@ def analyze_submission(sub: dict) -> list:
         judgments, ai_ok = {}, False
 
     claim_rows = supabase.table("claims").insert(
-        [{"submission_id": sub["id"], "claim_text": c, "position": i} for i, c in enumerate(claims)]
+        [{"submission_id": sub["id"], "claim_text": c, "position": i, "page": page_for(c, text, sub.get("page_map"))} for i, c in enumerate(claims)]
     ).execute().data
     claim_rows.sort(key=lambda r: r["position"])
 
@@ -171,3 +171,19 @@ def analyze_submission(sub: dict) -> list:
     return findings
 
 
+
+
+
+def page_for(claim, text, page_map):
+    """Page where a claim appears in an uploaded document, or None if it cannot be located."""
+    if not page_map or not text:
+        return None
+    i = text.find(claim)
+    if i < 0:
+        i = text.find(claim[:40])
+    if i < 0:
+        return None
+    for p in page_map:
+        if p["start"] <= i <= p["end"]:
+            return p.get("page")
+    return None

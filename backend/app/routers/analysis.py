@@ -17,7 +17,7 @@ def _load(sid: str, user: dict) -> dict:
 
 
 def build_findings(sid: str) -> list:
-    claims = (supabase.table("claims").select("id,claim_text,position")
+    claims = (supabase.table("claims").select("id,claim_text,position,page")
               .eq("submission_id", sid).order("position").execute().data)
     finds = supabase.table("findings").select("*").eq("submission_id", sid).execute().data
     by_claim = {f["claim_id"]: f for f in finds}
@@ -25,7 +25,7 @@ def build_findings(sid: str) -> list:
     chunks = {}
     if chunk_ids:
         rows = (supabase.table("evidence_chunks")
-                .select("id,content,doc_id,evidence_docs(title,valid_until)")
+                .select("id,content,doc_id,page,evidence_docs(title,valid_until)")
                 .in_("id", list(chunk_ids)).execute().data)
         chunks = {r["id"]: r for r in rows}
     out = []
@@ -38,11 +38,11 @@ def build_findings(sid: str) -> list:
             ch = chunks.get(cid)
             if ch:
                 doc = ch.get("evidence_docs") or {}
-                evidence.append({"chunk_id": cid, "doc_title": doc.get("title"),
+                evidence.append({"chunk_id": cid, "doc_title": doc.get("title"), "doc_id": ch.get("doc_id"), "page": ch.get("page"),
                                  "valid_until": doc.get("valid_until"), "content": ch["content"]})
         out.append({
             "finding_id": f["id"], "claim_id": c["id"], "claim_text": c["claim_text"],
-            "position": c["position"], "status": f["status"], "confidence": f["confidence"],
+            "position": c["position"], "claim_page": c.get("page"), "status": f["status"], "confidence": f["confidence"],
             "rule_type": f["rule_type"], "explanation": f["explanation"],
             "safer_draft": f["safer_draft"], "evidence": evidence,
         })
@@ -62,3 +62,4 @@ def analyze(sid: str, user=Depends(get_current_user)):
 def get_findings(sid: str, user=Depends(get_current_user)):
     _load(sid, user)
     return build_findings(sid)
+
