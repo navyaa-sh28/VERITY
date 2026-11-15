@@ -129,6 +129,23 @@ export default function SubmissionDetailPage({ params }: PageProps) {
   // Authentication & Role
   const { me, loading: authLoading } = useAuth();
   const isReviewerOrAdmin = !authLoading && (me?.role === "reviewer" || me?.role === "admin");
+  // Original-document helpers (uploaded PDF/DOCX submissions and page-level evidence)
+  const sourceFilename =
+    (submission as unknown as { source_filename?: string | null } | null)?.source_filename ?? null;
+  const isPdfSource = !!sourceFilename && sourceFilename.toLowerCase().endsWith(".pdf");
+
+  async function openSignedLink(endpoint: string, page?: number | null, pdf = true) {
+    const w = window.open("", "_blank");
+    try {
+      const r = await api<{ url: string }>(endpoint);
+      const target = r.url + (pdf && page ? `#page=${page}` : "");
+      if (w) w.location.href = target;
+      else window.location.href = target;
+    } catch (err: unknown) {
+      if (w) w.close();
+      setError(err instanceof Error ? err.message : "Could not open the file. Please try again.");
+    }
+  }
 
   // HumanGate decision states
   const [decisionComment, setDecisionComment] = useState("");
@@ -431,8 +448,8 @@ export default function SubmissionDetailPage({ params }: PageProps) {
         decision === "approve"
           ? "approved"
           : decision === "revise"
-          ? "marked for revision"
-          : "rejected";
+            ? "marked for revision"
+            : "rejected";
       setSuccessNotice(`Decision recorded successfully: submission ${actionText}.`);
     } catch (err: unknown) {
       const msg =
@@ -616,6 +633,12 @@ export default function SubmissionDetailPage({ params }: PageProps) {
               <span className="text-[11px] text-slate-400">
                 Created {formatDate(submission.created_at)}
               </span>
+              {sourceFilename && (
+                <>
+                  <span className="text-slate-300">•</span>
+                  <span className="text-[11px] text-slate-500">File: {sourceFilename}</span>
+                </>
+              )}
             </div>
 
             <div className="flex items-center gap-3 flex-wrap">
@@ -644,11 +667,10 @@ export default function SubmissionDetailPage({ params }: PageProps) {
               type="button"
               onClick={handleRunVerification}
               disabled={isVerifying || isSendingReview || isRewriting}
-              className={`h-10 px-4 rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all cursor-pointer shadow-xs ${
-                isVerifying
+              className={`h-10 px-4 rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all cursor-pointer shadow-xs ${isVerifying
                   ? "bg-slate-100 text-slate-500 cursor-not-allowed border border-slate-200"
                   : "bg-[#218C84] hover:bg-[#1a736d] text-white active:scale-[0.98]"
-              }`}
+                }`}
             >
               {isVerifying ? (
                 <>
@@ -674,18 +696,17 @@ export default function SubmissionDetailPage({ params }: PageProps) {
                 !isAnalysisDone
                   ? "Analyze submission claims before sending for review"
                   : submission.status === "in_review"
-                  ? "Submission is currently under review"
-                  : submission.status === "approved"
-                  ? "Submission is already approved"
-                  : submission.status === "rejected"
-                  ? "Submission was rejected"
-                  : "Send to legal & brand governance queue"
+                    ? "Submission is currently under review"
+                    : submission.status === "approved"
+                      ? "Submission is already approved"
+                      : submission.status === "rejected"
+                        ? "Submission was rejected"
+                        : "Send to legal & brand governance queue"
               }
-              className={`h-10 px-4 rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all shadow-xs ${
-                canSendForReview
+              className={`h-10 px-4 rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all shadow-xs ${canSendForReview
                   ? "bg-[#152A35] hover:bg-[#1f3a47] text-white cursor-pointer active:scale-[0.98]"
                   : "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed"
-              }`}
+                }`}
             >
               {isSendingReview ? (
                 <>
@@ -748,8 +769,8 @@ export default function SubmissionDetailPage({ params }: PageProps) {
                   telemetry.supportedPct >= 70
                     ? "text-[#3F8F6B]"
                     : telemetry.supportedPct >= 40
-                    ? "text-[#D4A85A]"
-                    : "text-[#B85C55]"
+                      ? "text-[#D4A85A]"
+                      : "text-[#B85C55]"
                 }
               >
                 {telemetry.supportedPct}%
@@ -867,11 +888,10 @@ export default function SubmissionDetailPage({ params }: PageProps) {
                       color: cfg.textColor,
                       borderColor: cfg.borderColor,
                     }}
-                    className={`inline px-2 py-0.5 mx-0.5 rounded-md cursor-pointer transition-all border font-medium ${
-                      isSelected
+                    className={`inline px-2 py-0.5 mx-0.5 rounded-md cursor-pointer transition-all border font-medium ${isSelected
                         ? "ring-2 ring-offset-1 ring-[#152A35] shadow-xs font-semibold"
                         : "hover:opacity-80"
-                    }`}
+                      }`}
                     title={`[${cfg.label.toUpperCase()}] Click to view claim evidence`}
                   >
                     <span
@@ -932,9 +952,8 @@ export default function SubmissionDetailPage({ params }: PageProps) {
                         backgroundColor: isSelected ? cfg.bg : "#ffffff",
                         borderColor: isSelected ? cfg.borderColor : "#E2E8F0",
                       }}
-                      className={`p-3 rounded-lg border text-xs cursor-pointer transition-all flex items-start justify-between gap-3 ${
-                        isSelected ? "ring-2 ring-offset-1 ring-[#152A35] shadow-xs" : "hover:bg-slate-50"
-                      }`}
+                      className={`p-3 rounded-lg border text-xs cursor-pointer transition-all flex items-start justify-between gap-3 ${isSelected ? "ring-2 ring-offset-1 ring-[#152A35] shadow-xs" : "hover:bg-slate-50"
+                        }`}
                     >
                       <div className="space-y-1 min-w-0 flex-1">
                         <span
@@ -995,6 +1014,25 @@ export default function SubmissionDetailPage({ params }: PageProps) {
                     <p className="font-heading font-semibold text-sm text-[#152A35] leading-snug">
                       “{selectedFinding.claim_text}”
                     </p>
+                    {(() => {
+                      const claimPage = (selectedFinding as unknown as { claim_page?: number | null }).claim_page;
+                      if (!sourceFilename) return null;
+                      return (
+                        <div className="flex items-center gap-2 flex-wrap pt-1.5">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#E4F1F0] text-[#155e58]">
+                            {sourceFilename}
+                            {claimPage ? ` · Page ${claimPage}` : ""}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => openSignedLink(`/submissions/${id}/file`, claimPage, isPdfSource)}
+                            className="text-[10px] font-semibold px-2 py-0.5 rounded bg-white border border-slate-300 text-[#152A35] hover:bg-slate-50"
+                          >
+                            {claimPage && isPdfSource ? `Open original (page ${claimPage})` : "Open original file"}
+                          </button>
+                        </div>
+                      );
+                    })()}
                   </div>
 
                   {/* Governance Explanation */}
@@ -1055,6 +1093,28 @@ export default function SubmissionDetailPage({ params }: PageProps) {
                                         Valid until: {ev.valid_until}
                                       </span>
                                     )}
+                                    {(() => {
+                                      const evPage = (ev as unknown as { page?: number | null }).page;
+                                      const evDoc = (ev as unknown as { doc_id?: string }).doc_id;
+                                      return (
+                                        <>
+                                          {evPage ? (
+                                            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#E4F1F0] text-[#155e58]">
+                                              Page {evPage}
+                                            </span>
+                                          ) : null}
+                                          {isReviewerOrAdmin && evDoc && evPage ? (
+                                            <button
+                                              type="button"
+                                              onClick={() => openSignedLink(`/evidence/${evDoc}/file`, evPage, true)}
+                                              className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white border border-slate-300 text-[#152A35] hover:bg-slate-50"
+                                            >
+                                              Open source page
+                                            </button>
+                                          ) : null}
+                                        </>
+                                      );
+                                    })()}
                                   </div>
                                 </div>
 
@@ -1237,11 +1297,10 @@ export default function SubmissionDetailPage({ params }: PageProps) {
                   ? "Enter a justification comment to enable approval with non-supported findings"
                   : "Approve submission"
               }
-              className={`h-10 px-5 rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all shadow-xs ${
-                isApproveDisabled
+              className={`h-10 px-5 rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all shadow-xs ${isApproveDisabled
                   ? "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed"
                   : "bg-[#3F8F6B] hover:bg-[#34785a] text-white cursor-pointer active:scale-[0.98]"
-              }`}
+                }`}
             >
               {isSubmittingDecision ? (
                 <span className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
@@ -1257,11 +1316,10 @@ export default function SubmissionDetailPage({ params }: PageProps) {
               onClick={() => handleDecision("revise")}
               disabled={isSubmittingDecision}
               title="Request revision from the author"
-              className={`h-10 px-5 rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all shadow-xs ${
-                isSubmittingDecision
+              className={`h-10 px-5 rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all shadow-xs ${isSubmittingDecision
                   ? "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed"
                   : "bg-[#D4A85A] hover:bg-[#c49848] text-white cursor-pointer active:scale-[0.98]"
-              }`}
+                }`}
             >
               {isSubmittingDecision ? (
                 <span className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
@@ -1277,11 +1335,10 @@ export default function SubmissionDetailPage({ params }: PageProps) {
               onClick={() => handleDecision("reject")}
               disabled={isSubmittingDecision}
               title="Reject this submission"
-              className={`h-10 px-5 rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all shadow-xs ${
-                isSubmittingDecision
+              className={`h-10 px-5 rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all shadow-xs ${isSubmittingDecision
                   ? "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed"
                   : "bg-[#B85C55] hover:bg-[#a24e47] text-white cursor-pointer active:scale-[0.98]"
-              }`}
+                }`}
             >
               {isSubmittingDecision ? (
                 <span className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
@@ -1386,13 +1443,12 @@ export default function SubmissionDetailPage({ params }: PageProps) {
             type="button"
             onClick={handleSuggestSaferWording}
             disabled={isRewriting || isVerifying || findings.length === 0}
-            className={`h-10 px-4 rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all shrink-0 shadow-xs ${
-              findings.length === 0
+            className={`h-10 px-4 rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all shrink-0 shadow-xs ${findings.length === 0
                 ? "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed"
                 : isRewriting
-                ? "bg-[#FAF4E8] text-[#967129] border border-[#D4A85A]/40 cursor-wait"
-                : "bg-[#FAF4E8] hover:bg-[#faeed6] text-[#967129] border border-[#D4A85A]/40 cursor-pointer active:scale-[0.98]"
-            }`}
+                  ? "bg-[#FAF4E8] text-[#967129] border border-[#D4A85A]/40 cursor-wait"
+                  : "bg-[#FAF4E8] hover:bg-[#faeed6] text-[#967129] border border-[#D4A85A]/40 cursor-pointer active:scale-[0.98]"
+              }`}
           >
             {isRewriting ? (
               <>
@@ -1445,7 +1501,7 @@ export default function SubmissionDetailPage({ params }: PageProps) {
                       </span>
                       <span className="text-slate-400">•</span>
                       <span className="font-semibold text-slate-600">
-                        Claim #{finding.position || "—"}
+                        Claim #{(finding.position ?? 0) + 1}
                       </span>
                     </div>
                     {finding.explanation && (

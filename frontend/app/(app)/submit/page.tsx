@@ -1,326 +1,198 @@
 "use client";
-
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { api } from "@/lib/api";
-import { Submission } from "@/lib/status";
 
-const SAMPLE_COPY =
-  "CloudSuite 2.0 cuts enterprise infrastructure carbon emissions by 48% across all deployments. Trusted by over 10,000 global enterprises, we guarantee 99.999% uninterrupted uptime with zero configuration overhead, outperforming legacy competitor Apex Cloud by 3.5x in throughput benchmarks.";
+const MAX_BYTES = 10 * 1024 * 1024;
+const ALLOWED = [".pdf", ".docx", ".txt"];
+
+function formatSize(bytes: number) {
+  return bytes < 1024 * 1024 ? `${Math.max(1, Math.round(bytes / 1024))} KB` : `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+}
 
 export default function SubmitPage() {
   const router = useRouter();
-
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [mode, setMode] = useState<"text" | "file">("text");
   const [title, setTitle] = useState("");
-  const [contentText, setContentText] = useState("");
-  const [assetType, setAssetType] = useState("Landing Page");
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [content, setContent] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
 
-  const wordCount = contentText.trim() ? contentText.trim().split(/\s+/).length : 0;
-  const estimatedClaims = Math.max(0, Math.floor(wordCount / 12));
+  const trimmed = content.trim();
+  const words = trimmed ? trimmed.split(/\s+/).length : 0;
 
-  function loadSample() {
-    setTitle("Q3 CloudSuite Launch Campaign - Hero Copy");
-    setContentText(SAMPLE_COPY);
-    setAssetType("Landing Page");
-    setError(null);
-  }
-
-  function handleClear() {
-    setTitle("");
-    setContentText("");
-    setError(null);
+  function pickFile(f: File | null) {
+    setError("");
+    if (!f) { setFile(null); return; }
+    const lower = f.name.toLowerCase();
+    if (!ALLOWED.some((ext) => lower.endsWith(ext))) {
+      setFile(null);
+      setError("Unsupported file type. Upload a PDF, DOCX or TXT file.");
+      return;
+    }
+    if (f.size === 0) { setFile(null); setError("That file is empty."); return; }
+    if (f.size > MAX_BYTES) { setFile(null); setError("That file is larger than 10 MB."); return; }
+    setFile(f);
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError(null);
+    if (busy) return;
+    setError("");
 
-    const cleanTitle = title.trim();
-    const cleanContent = contentText.trim();
-
-    if (!cleanTitle) {
-      setError("Please provide a submission title.");
-      return;
-    }
-    if (!cleanContent) {
-      setError("Please provide marketing copy or claim text to verify.");
+    if (mode === "text") {
+      if (!title.trim()) { setError("Please enter a title."); return; }
+      if (trimmed.length < 10) { setError("Please paste some marketing text to verify."); return; }
+    } else if (!file) {
+      setError("Please choose a PDF, DOCX or TXT file.");
       return;
     }
 
-    setSubmitting(true);
-
+    setBusy(true);
     try {
-      const submission = await api<Submission>("/submissions", {
-        method: "POST",
-        body: JSON.stringify({
-          title: cleanTitle,
-          content_text: cleanContent,
-        }),
-      });
-
-      router.push(`/submissions/${submission.id}`);
+      let created: { id: string };
+      if (mode === "text") {
+        created = await api<{ id: string }>("/submissions", {
+          method: "POST",
+          body: JSON.stringify({ title: title.trim(), content_text: trimmed }),
+        });
+      } else {
+        const fd = new FormData();
+        fd.append("title", title.trim() || file!.name);
+        fd.append("file", file!);
+        created = await api<{ id: string }>("/submissions/upload", { method: "POST", body: fd });
+      }
+      router.push(`/submissions/${created.id}`);
     } catch (err: unknown) {
-      const msg =
-        err instanceof Error ? err.message : "Failed to create submission. Please try again.";
-      setError(msg);
-      setSubmitting(false);
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      setBusy(false);
     }
   }
 
+  const tabClass = (active: boolean) =>
+    `px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${active ? "bg-[#152A35] text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+    }`;
+
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-12">
-      {/* Top Header & Context */}
-      <div className="flex flex-col space-y-2">
-        <div className="flex items-center justify-between flex-wrap gap-2">
-          <div className="flex items-center space-x-2">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#EAF3F1] text-[#218C84] text-xs font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#218C84] mr-1.5 animate-pulse" />
-              Audit Engine Live
-            </span>
-            <span className="text-xs text-slate-500 font-medium">Protocol v4.3-Active</span>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <button
-              type="button"
-              onClick={loadSample}
-              className="text-xs font-semibold text-[#218C84] hover:text-[#1b736c] px-2.5 py-1 rounded bg-[#EAF3F1] hover:bg-[#d6eae6] transition-colors flex items-center space-x-1"
-            >
-              <span className="material-symbols-outlined text-[16px]">data_object</span>
-              <span>Load Sample Copy</span>
-            </button>
-            <Link
-              href="/submissions"
-              className="text-xs font-semibold text-slate-600 hover:text-slate-900 px-2.5 py-1 rounded hover:bg-slate-200/60 transition-colors flex items-center space-x-1"
-            >
-              <span className="material-symbols-outlined text-[16px]">arrow_back</span>
-              <span>All Submissions</span>
-            </Link>
-          </div>
-        </div>
-
-        <div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-[#152A35] tracking-tight">
-            New Content Submission
-          </h1>
-          <p className="text-sm text-slate-600 mt-1 leading-relaxed">
-            Submit marketing copy, campaign assertions, or press releases for automated evidence verification and governance review.
-          </p>
-        </div>
+    <form onSubmit={handleSubmit} className="max-w-3xl mx-auto space-y-6 pb-16">
+      <div>
+        <h1 className="font-heading text-2xl font-bold text-[#152A35]">Submit content for verification</h1>
+        <p className="text-sm text-slate-500 mt-1">
+          Paste marketing text, or upload a PDF, DOCX or TXT document. VERITY extracts the claims and checks them
+          against the approved evidence library.
+        </p>
       </div>
 
-      {/* Error Banner */}
       {error && (
-        <div className="p-4 rounded-xl bg-[#ffdad6] border border-[#ba1a1a]/25 text-[#93000a] text-sm flex items-start space-x-3">
-          <span className="material-symbols-outlined text-[20px] shrink-0 mt-0.5">error</span>
-          <div className="flex-1">
-            <p className="font-semibold">Submission failed</p>
-            <p className="text-xs mt-0.5 leading-relaxed">{error}</p>
-          </div>
-          <button
-            type="button"
-            onClick={() => setError(null)}
-            className="text-[#93000a] hover:opacity-75 p-0.5"
-            aria-label="Dismiss error"
-          >
-            <span className="material-symbols-outlined text-[18px]">close</span>
-          </button>
+        <div role="alert" className="rounded-lg bg-[#ffdad6] border border-[#ba1a1a]/30 p-3 text-sm text-[#93000a]">
+          {error}
         </div>
       )}
 
-      {/* Form Submission */}
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Campaign Metadata Card */}
-        <div className="bg-white rounded-xl border border-slate-200/90 shadow-sm p-5 sm:p-6 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-            <div className="flex items-center space-x-2 text-[#152A35]">
-              <span className="material-symbols-outlined text-[#218C84] text-[20px]">
-                fact_check
-              </span>
-              <h2 className="font-heading text-base font-bold">Campaign Metadata</h2>
-            </div>
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider bg-slate-100 px-2.5 py-0.5 rounded-full">
-              Step 1 of 2
-            </span>
-          </div>
-
-          {/* Submission Title Input */}
-          <div className="space-y-1.5">
-            <label
-              htmlFor="submission-title"
-              className="block text-xs font-semibold text-slate-800"
-            >
-              Submission Title <span className="text-[#B85C55]">*</span>
-            </label>
-            <input
-              id="submission-title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Q3 CloudSuite Launch Campaign - Hero Copy"
-              required
-              className="w-full h-11 px-3.5 bg-[#F7F7F5]/70 rounded-lg text-sm text-slate-900 border border-slate-300 focus:bg-white focus:border-[#218C84] focus:ring-2 focus:ring-[#218C84]/20 outline-none transition-all placeholder:text-slate-400"
-            />
-          </div>
-
-          {/* Asset Type Chips */}
-          <div className="space-y-2">
-            <label className="block text-xs font-semibold text-slate-800">
-              Channel / Asset Type
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {["Landing Page", "Press Release", "Social Ad", "Executive Speech", "Email Campaign"].map(
-                (type) => {
-                  const selected = assetType === type;
-                  return (
-                    <button
-                      key={type}
-                      type="button"
-                      onClick={() => setAssetType(type)}
-                      className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all flex items-center space-x-1.5 ${
-                        selected
-                          ? "bg-[#218C84] text-white shadow-sm"
-                          : "bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200/80"
-                      }`}
-                    >
-                      {selected && (
-                        <span className="material-symbols-outlined text-[14px]">check</span>
-                      )}
-                      <span>{type}</span>
-                    </button>
-                  );
-                }
-              )}
-            </div>
-          </div>
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-5">
+        <div>
+          <label htmlFor="title" className="block text-xs font-semibold text-[#152A35] mb-1.5">
+            Title {mode === "text" && <span className="text-[#B85C55]">*</span>}
+          </label>
+          <input
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            disabled={busy}
+            maxLength={150}
+            placeholder={mode === "file" ? "Optional, defaults to the file name" : "e.g. Nimbus launch campaign"}
+            className="w-full px-3.5 py-2.5 text-sm bg-[#F7F7F5] border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#218C84]/30 focus:border-[#218C84]"
+          />
         </div>
 
-        {/* Marketing Copy Input Card */}
-        <div className="bg-white rounded-xl border border-slate-200/90 shadow-sm p-5 sm:p-6 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-            <div className="flex items-center space-x-2 text-[#152A35]">
-              <span className="material-symbols-outlined text-[#218C84] text-[20px]">
-                edit_note
-              </span>
-              <h2 className="font-heading text-base font-bold">Marketing Copy & Claim Text</h2>
-            </div>
-            <div className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-[#EAF3F1] text-[#218C84] text-xs font-semibold">
-              <span className="material-symbols-outlined text-[14px]">auto_awesome</span>
-              <span>Live Claim Parser</span>
-            </div>
-          </div>
+        <div className="flex gap-2">
+          <button type="button" onClick={() => { setMode("text"); setError(""); }} className={tabClass(mode === "text")}>
+            Paste text
+          </button>
+          <button type="button" onClick={() => { setMode("file"); setError(""); }} className={tabClass(mode === "file")}>
+            Upload document
+          </button>
+        </div>
 
-          {/* Helper Banner in Mint */}
-          <div className="bg-[#EAF3F1]/80 border border-[#218C84]/20 rounded-lg p-3.5 flex items-start space-x-2.5">
-            <span className="material-symbols-outlined text-[#218C84] text-[18px] shrink-0 mt-0.5">
-              verified
-            </span>
-            <p className="text-xs text-[#006f68] leading-relaxed">
-              Claims regarding performance metrics, sustainability statistics, pricing guarantees, and competitive superiority are automatically extracted and matched against the verified Evidence Vault.
+        {mode === "text" ? (
+          <div>
+            <label htmlFor="content" className="block text-xs font-semibold text-[#152A35] mb-1.5">
+              Content text <span className="text-[#B85C55]">*</span>
+            </label>
+            <textarea
+              id="content"
+              rows={10}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              disabled={busy}
+              maxLength={20000}
+              placeholder="Paste marketing copy, headline drafts, product claims, or full press release text here…"
+              className="w-full px-3.5 py-3 text-sm bg-[#F7F7F5] border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#218C84]/30 focus:border-[#218C84] resize-y"
+            />
+            <p className="text-xs text-slate-500 mt-1.5">
+              {words} words · {content.length} / 20,000 characters
             </p>
           </div>
-
-          {/* Large Textarea */}
-          <div className="space-y-1.5">
-            <label
-              htmlFor="copy-textarea"
-              className="block text-xs font-semibold text-slate-800"
+        ) : (
+          <div>
+            <input
+              ref={fileRef}
+              type="file"
+              accept=".pdf,.docx,.txt"
+              className="hidden"
+              onChange={(e) => pickFile(e.target.files?.[0] ?? null)}
+            />
+            <div
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => { e.preventDefault(); pickFile(e.dataTransfer.files?.[0] ?? null); }}
+              className="rounded-xl border-2 border-dashed border-slate-300 bg-[#F7F7F5] p-8 text-center space-y-3"
             >
-              Content Text <span className="text-[#B85C55]">*</span>
-            </label>
-            <div className="relative">
-              <textarea
-                id="copy-textarea"
-                rows={9}
-                value={contentText}
-                onChange={(e) => setContentText(e.target.value)}
-                placeholder="Paste marketing copy, headline drafts, product claims, or full press release text here..."
-                required
-                className="w-full p-4 bg-[#F7F7F5]/70 rounded-lg text-sm text-slate-900 border border-slate-300 focus:bg-white focus:border-[#218C84] focus:ring-2 focus:ring-[#218C84]/20 outline-none transition-all placeholder:text-slate-400 font-sans leading-relaxed resize-y"
-              />
-              <div className="absolute bottom-3 right-3 flex items-center space-x-1.5 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full border border-slate-200 shadow-xs pointer-events-none text-[11px] font-mono text-slate-500">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#218C84] animate-pulse" />
-                <span>NLP Ready</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Word Count and Telemetry */}
-          <div className="flex items-center justify-between pt-1 text-xs text-slate-500 border-t border-slate-100">
-            <div className="flex items-center space-x-2">
-              <span className="font-semibold text-slate-800">{wordCount} words</span>
-              <span>•</span>
-              <span className="text-slate-600">{contentText.length} characters</span>
-              {estimatedClaims > 0 && (
-                <>
-                  <span>•</span>
-                  <span className="text-[#218C84] font-semibold">
-                    ~{estimatedClaims} potential claim{estimatedClaims > 1 ? "s" : ""}
-                  </span>
-                </>
+              <span className="material-symbols-outlined text-[36px] text-[#218C84]">upload_file</span>
+              {file ? (
+                <p className="text-sm font-semibold text-[#152A35]">
+                  {file.name} <span className="font-normal text-slate-500">({formatSize(file.size)})</span>
+                </p>
+              ) : (
+                <p className="text-sm text-slate-600">Drag a file here, or choose one</p>
               )}
-            </div>
-
-            {contentText && (
               <button
                 type="button"
-                onClick={handleClear}
-                className="text-xs text-slate-500 hover:text-slate-800 flex items-center space-x-1 transition-colors"
+                onClick={() => fileRef.current?.click()}
+                disabled={busy}
+                className="px-4 py-2 rounded-lg bg-white border border-slate-300 text-sm font-semibold text-[#152A35] hover:bg-slate-50"
               >
-                <span className="material-symbols-outlined text-[14px]">delete</span>
-                <span>Clear text</span>
+                {file ? "Choose a different file" : "Choose file"}
               </button>
-            )}
+              <p className="text-xs text-slate-500">
+                PDF, DOCX or TXT, up to 10 MB. Text-based files only: scanned or image-only PDFs can&apos;t be read.
+                Only the first 20,000 characters are checked. For PDFs, VERITY records the page of each claim and
+                evidence quote.
+              </p>
+            </div>
           </div>
-        </div>
+        )}
+      </div>
 
-        {/* Evidence Vault Sync Indicator */}
-        <div className="bg-white/60 border border-slate-200/60 rounded-xl px-4 py-3 flex items-center justify-between text-xs text-slate-600">
-          <div className="flex items-center space-x-2">
-            <span className="material-symbols-outlined text-[18px] text-[#218C84]">
-              database
-            </span>
-            <span>
-              Connected to <strong>Evidence Vault &amp; Active Guidelines</strong>
-            </span>
-          </div>
-          <span className="font-mono text-[11px] text-[#218C84] bg-[#EAF3F1] px-2 py-0.5 rounded font-semibold">
-            VAULT SYNCHRONIZED
-          </span>
-        </div>
-
-        {/* Action Button Bar */}
-        <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full sm:flex-1 h-12 bg-[#218C84] hover:bg-[#1b736c] text-white rounded-lg text-sm font-semibold flex items-center justify-center space-x-2 shadow-sm transition-all active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
-          >
-            {submitting ? (
-              <>
-                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                <span>Creating Submission &amp; Initializing...</span>
-              </>
-            ) : (
-              <>
-                <span className="material-symbols-outlined text-[20px]">rocket_launch</span>
-                <span>Submit &amp; Open Verification</span>
-              </>
-            )}
-          </button>
-
-          <Link
-            href="/submissions"
-            className="w-full sm:w-auto h-12 px-6 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 text-sm font-semibold flex items-center justify-center transition-colors"
-          >
-            Cancel
-          </Link>
-        </div>
-      </form>
-    </div>
+      <div className="flex items-center gap-3">
+        <button
+          type="submit"
+          disabled={busy}
+          className={`flex-1 h-12 rounded-xl text-sm font-semibold text-white transition-all ${busy ? "bg-slate-400 cursor-wait" : "bg-[#218C84] hover:bg-[#1a736d] active:scale-[0.99]"
+            }`}
+        >
+          {busy ? (mode === "file" ? "Uploading and reading the file…" : "Submitting…") : "Submit and open verification"}
+        </button>
+        <button
+          type="button"
+          disabled={busy}
+          onClick={() => router.push("/submissions")}
+          className="h-12 px-5 rounded-xl border border-slate-300 bg-white text-sm font-semibold text-[#152A35] hover:bg-slate-50"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
   );
 }
-
