@@ -176,3 +176,10 @@ Demo images are in `demo_images/` (`nimbus_logo.png`, `nimbus_campaign_ok.png`, 
 - Colours are compared in a perceptual colour space; white, black and grey are always allowed.
 - DOCX files have no reliable page numbers, so page references are for PDFs only. Scanned or image-only PDFs are not supported.
 - PatternSense suggestions come from an AI model and are filtered to rules that compile and catch real flagged claims, but an admin must review them before publishing.
+
+## Demo files
+Download from the `demo_files/` folder (use the "Download raw file" button on GitHub):
+- `nimbus_campaign.pdf` (2 pages) and `nimbus_campaign.docx`: campaigns to upload as the creator (Submit, Upload document, then Run verification). The PDF shows a page number on each claim; a DOCX has no reliable page numbers.
+- `nimbus_security_policy.pdf` (2 pages): new evidence for the admin to upload on the Evidence page. Then, as the creator, verify `Nimbus stores customer data in Mumbai and Hyderabad. Nimbus encrypts files with AES-256.` Both claims should be Supported, with the evidence page shown.
+- `nimbus_evidence_pack.pdf`: the evidence already loaded on the live site, included so the demo can be recreated. You don't need to upload it again.
+- `demo_images/`: a logo and two campaign images for VisualGuard.
