@@ -124,7 +124,7 @@ Sign in as admin, add evidence for your brand on the **Evidence** page (include 
 
 ## Known limitations and future work
 
-- **Not built yet:** VisualGuard (logo, colour and accessibility checks on images), video governance, CMS integrations, multilingual verification and enterprise controls.
+- **Not built yet:** video governance, CMS integrations, multilingual verification and enterprise controls.
 - Content is submitted as text in the app. The evidence API can extract text from PDF and DOCX files, but the web form accepts text only.
 - Creating a new BrandDNA version is available through the API (the Render `/docs` page). The web app lists versions and publishes them.
 - The free backend host sleeps when idle, and the free AI tier is rate-limited, so verification can occasionally be slow or return a "service busy" message. Try again after a moment.
@@ -132,6 +132,7 @@ Sign in as admin, add evidence for your brand on the **Evidence** page (include 
 ---
 
 ## Run it locally
+Database: run docs/schema.sql in a new Supabase project and create a private storage bucket named uploads. The schema was exported from our working project, and we have not re-run it on a fresh project.
 
 **Backend**
 
@@ -155,3 +156,23 @@ The database schema (tables, row-level security and the vector search function) 
 - `backend/`: FastAPI service (auth, evidence ingestion, verification engine, IntentLock, review, analytics, audit)
 - `frontend/`: Next.js web app
 - `docs/API_CONTRACT.md`: summary of the API endpoints
+
+## New in Round 3
+
+1. **Document submission with page-level EvidenceTrace.** Submit a PDF, DOCX or TXT file. VERITY extracts the text, verifies the claims, and for PDFs records the page of each claim and of each evidence quote, with a link that opens the original page. Evidence PDFs are indexed page by page.
+2. **VisualGuard.** Submit a PNG or JPG on the Submit page ("Check image"). VERITY checks it against the active BrandDNA version: whether the colours are on the approved palette (neutrals allowed), whether text contrast meets the minimum ratio, and whether the approved logo is present. Each check becomes a finding with the same statuses, explanation, recommended fix, HumanGate review and audit trail as text claims.
+3. **PatternSense feedback loop and BrandDNA editor.** Admins can create a draft version from any version, edit rules, approved claims, tone, palette and logo, compare two versions, and publish. Published versions are locked. PatternSense finds recurring flagged wording and proposes new rules, which are checked against real flagged claims before being offered. A table shows flagged findings per BrandDNA version.
+
+### Try the new features
+Demo images are in `demo_images/` (`nimbus_logo.png`, `nimbus_campaign_ok.png`, `nimbus_campaign_bad.png`).
+1. Sign in as **admin**, open **BrandDNA**, check that a version with the Nimbus palette (`#1E6FD9`, `#0B2545`, `#8EC5FF`) and the logo is active. If not: create a draft, add those colours, upload `nimbus_logo.png`, save and publish.
+2. Sign in as **creator**, **Submit**, **Check image**, upload `nimbus_campaign_ok.png`: all three checks Supported.
+3. Upload `nimbus_campaign_bad.png`: all three Contradicted, with measured values and recommended fixes.
+4. As **admin**, open **BrandDNA**, create a draft, click **Analyse recurring findings**, add a suggested rule to the draft, compare it with the previous version and publish.
+
+### Limits of VisualGuard (stated honestly)
+- Text contrast is estimated by detecting text-like regions with edge analysis; the text itself is not read. Photos and busy backgrounds can give false results, so a person makes the final decision.
+- Logo matching compares the uploaded logo with the image at several sizes, plus a feature-matching backup. Transparent logos are flattened on white, so a logo on a solid background works best. Heavily rotated, distorted or recoloured logos may not match.
+- Colours are compared in a perceptual colour space; white, black and grey are always allowed.
+- DOCX files have no reliable page numbers, so page references are for PDFs only. Scanned or image-only PDFs are not supported.
+- PatternSense suggestions come from an AI model and are filtered to rules that compile and catch real flagged claims, but an admin must review them before publishing.
