@@ -32,7 +32,7 @@ async def upload_submission(title: str = Form(...), file: UploadFile = File(...)
 
     parts, page_map, pos, truncated = [], [], 0, False
     for pg, txt in pages:
-        t = re.sub(r"[ \t]+", " ", txt or "").strip()
+        t = re.sub(r"\s+", " ", txt or "").strip()
         if not t:
             continue
         if pos + len(t) > MAX_CHARS:
@@ -70,3 +70,4 @@ def submission_file(sid: str, user=Depends(get_current_user)):
     if not url:
         raise HTTPException(503, "Could not create a download link. Please try again.")
     return {"url": url, "filename": sub.get("source_filename")}
+
